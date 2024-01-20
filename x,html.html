@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dancing Bars with Controls</title>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .bar-container {
+    
+    border-color:2px rgb(255, 4, 4) ;
+    background-color: black;
+      display: flex;
+      width: 50%;
+      height:40%;
+    }
+    
+    #bar1 {
+      flex: 2;
+      width:fit-content;
+      height:100%; /* Increased bar height */
+      
+      animation: dance 3s infinite alternate; /* Adjusted duration for better visibility */
+    }
+    #bar2 {
+      flex: 2;
+      width: fit-content;
+      height: 250px; /* Increased bar height */
+     
+      animation: dance 2s infinite alternate; /* Adjusted duration for better visibility */
+    }
+    #bar3 {
+        position:static;
+        width: fit-content;
+      flex: 2;
+      height: 250px; /* Increased bar height */
+      
+      animation: dance 1s infinite alternate; /* Adjusted duration for better visibility */
+    }
+    #bar4 {
+        width: fit-content;
+      flex: 2;
+      height: 250px; /* Increased bar height */
+      
+      animation: dance 3s infinite alternate; /* Adjusted duration for better visibility */
+    }
+    
+    @keyframes dance {
+      0%, 51% {
+        
+        transform: translateY(100px);
+      }
+      0%,2% {
+        transform: translateY(0px); /* Increased translateY value */
+      }
+    }
+
+    .button-container {
+      margin-top: 50px;
+    }
+    #x{
+        justify-content: flex-end;
+        display:flexbox;
+        color: aliceblue;
+        background-color: green;
+
+    }
+    #y{
+        color: aliceblue;
+        background-color: purple;
+        
+    }
+    #z{
+        color: aliceblue;
+        background-color: red;
+        
+    }
+  </style>
+</head>
+<body>
+  <div class="bar-container">
+    <div id="bar1" style="background-color: rgb(158, 57, 158);"></div>
+    <div id="bar2" style="background-color: rgb(217, 20, 213);"></div>
+    <div id="bar3" style="background-color: rgb(221, 133, 133);"></div>
+    <div id="bar4" style="background-color: orange;"></div>
+    <div id="bar5" style="background-color: yellow;"></div>
+  </div>
+
+  <div class="button-container" id="bar1,bar2,bar3,bar4">
+    <button id="x" onclick="startAnimation()">Start</button>
+    <button id="y" onclick="restartAnimation()">Restart</button>
+    <button id="z" onclick="stopAnimation()">Stop</button>
+  </div>
+
+  <script>
+    let animationInterval;
+
+    function startAnimation() {
+      stopAnimation(); // Stop previous animation if any
+      const bars = document.querySelectorAll('#bar1,#bar2,#bar3,#bar4');
+      bars.forEach(function(bar, index) {
+        bar.style.animationDelay = `${index * 0.2}s`;
+      });
+      animationInterval = setInterval(() => {
+        bars.forEach(function(bar) {
+          bar.style.animationPlayState = 'running';
+        });
+      }, 3000); // Adjusted interval to match the animation duration
+    }
+
+    function restartAnimation() {
+      const bars = document.querySelectorAll('#bar1,#bar2,#bar3,#bar4');
+      bars.forEach(function(bar) {
+        bar.style.animation = 'none';
+        bar.offsetHeight; /* Trigger reflow */
+        bar.style.animation = null;
+      });
+    }
+
+    function stopAnimation() {
+      clearInterval(animationInterval);
+      const bars = document.querySelectorAll('#bar1,#bar2,#bar3,#bar4');
+      bars.forEach(function(bar) {
+        bar.style.animationPlayState = 'paused';
+      });
+    }
+  </script>
+</body>
+</html>
+
+
